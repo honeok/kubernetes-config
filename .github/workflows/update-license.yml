@@ -1,0 +1,44 @@
+---
+name: "Update license"
+
+on:
+  schedule:
+    - cron: "0 6 1 1 *"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  update:
+    name: "Update license"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: "Update license"
+        id: license
+        uses: FantasticFiasco/action-update-license-year@v3
+        with:
+          token: ${{ github.token }}
+          path: "LICENSE"
+          commitTitle: "docs: update license year to {{currentYear}}"
+          commitAuthorName: "github-actions[bot]"
+          commitAuthorEmail: "41898282+github-actions[bot]@users.noreply.github.com"
+          prTitle: "docs: update license year to {{currentYear}}"
+          labels: "documentation"
+
+      - name: "Approve and auto merge"
+        if: steps.license.outputs.pullRequestNumber != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUM: ${{ steps.license.outputs.pullRequestNumber }}
+        run: gh pr merge --squash --auto --delete-branch "$PR_NUM"
