@@ -3,7 +3,7 @@ name: "Sync kubernetes core images"
 
 on:
   push:
-    branches: [master]
+    branches: [main]
     paths: ["images/kubernetes-core-images.md"]
   schedule:
     - cron: "0 16 * * *"
