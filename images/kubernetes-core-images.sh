@@ -23,7 +23,7 @@ log() {
 
 ## functions library
 get_img_ver() {
-    local img mode
+    local img regex mode
 
     img="$1"
     mode="$2"
