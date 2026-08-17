@@ -39,7 +39,6 @@ jobs:
           password: ${{ secrets.ALIYUN_PASSWORD }}
 
       - name: "Sync kubernetes core images"
-        id: update
         env:
           ALIYUN_REGISTRY: ${{ secrets.ALIYUN_REGISTRY }}
           ALIYUN_NAMESPACE: ${{ secrets.ALIYUN_NAMESPACE }}
@@ -47,8 +46,12 @@ jobs:
         shell: bash
         run: bash kubernetes-core-images.sh
 
+      - name: "Verify changed files"
+        id: changed
+        uses: tj-actions/verify-changed-files@v20
+
       - name: "Commit and push changes"
-        if: steps.update.outputs.bump_version != ''
+        if: steps.changed.outputs.files_changed == 'true'
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "docs: sync kubernetes core images by github actions [no ci]"

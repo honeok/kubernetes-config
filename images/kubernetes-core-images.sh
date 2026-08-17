@@ -63,8 +63,6 @@ update_and_edit() {
     local img="$1" ver="$2"
 
     sed -Ei "s#^($(printf '%s\n' "$img" | sed 's#[][(){}.^$*+?|/\\]#\\&#g')):[^[:space:]]+\$#\1:${ver}#" "$CORE_IMAGES_FILE"
-    # Pass environment variables to github to trigger automatic commits.
-    echo "bump_version=1" >> "$GITHUB_OUTPUT"
 }
 
 sync_img() {
