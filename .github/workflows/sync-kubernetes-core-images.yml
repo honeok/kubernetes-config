@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
-  contents: write
+  contents: read
 
 env:
   TZ: Asia/Shanghai
@@ -23,6 +23,8 @@ jobs:
   build:
     name: "Sync kubernetes core images"
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: "Checkout repository"
