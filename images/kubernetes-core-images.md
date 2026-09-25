@@ -6,6 +6,6 @@ registry.k8s.io/kube-apiserver:v1.37.1
 registry.k8s.io/kube-controller-manager:v1.37.1
 registry.k8s.io/kube-scheduler:v1.37.1
 registry.k8s.io/kube-proxy:v1.37.1
-registry.k8s.io/etcd:3.7.1-0
+registry.k8s.io/etcd:3.7.2-0
 registry.k8s.io/coredns/coredns:v1.14.7
 ```
